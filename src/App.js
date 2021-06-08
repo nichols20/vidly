@@ -19,8 +19,8 @@ function App() {
   let movieCount = 0
 
   let clickedDelete = movie =>{
-    console.log(movie)
-    console.log(open)
+    const newMovies = movies.filter(m => m._id !== movie._id)
+    movies = newMovies
   }
 
   let iterateMovies = ()=>{
