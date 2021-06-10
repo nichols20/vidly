@@ -4,7 +4,6 @@ import {getMovies} from './fakeMovieService'
 class Movies extends Component{
     state ={
         movies: getMovies(),
-        movieCount: 0
     }
     
     clickedDelete(movie){
@@ -20,15 +19,15 @@ class Movies extends Component{
         this.setState({movies: newMovies})
       }
 
-    countMovies = ()=>{
-        return (this.state.movieCount === 0) ? 'There are no movies in the Database' : `There are ${this.state.movieCount} movies in the database`
-      }
-
-
     render(){
+      /* Destructured this.state.movies.length to count then created if statement to illustrate how many movies there were in the
+      database and if none were present another iteration would appear */
+      const {length: count} = this.state.movies
+
+      if (count === 0) return <h3>There are no movies in the Database.</h3>
           return (
             <main className = 'container'>
-              <h1>{this.countMovies()}</h1>
+              <h3>Showing {count} Movies in the database</h3>
               <table className ='table'>
                   <thead>
                     <tr>
