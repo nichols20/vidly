@@ -1,9 +1,15 @@
 import React, {Component} from 'react'
 import {getMovies} from './fakeMovieService'
+import heart from './heart.png'
 
 class Movies extends Component{
     state ={
         movies: getMovies(),
+    }
+
+    styles = {
+      width: '25px',
+      height: '25px',
     }
     
     clickedDelete(movie){
@@ -44,19 +50,20 @@ class Movies extends Component{
                        <th>{movie.genre.name}</th>
                        <th>{movie.numberInStock}</th>
                        <th>{movie.dailyRentalRate}</th>
+                       <th><img style={this.styles}src={heart}></img></th>
                        <th><button onClick={() => this.clickedDelete(movie)} className='btn btn-danger btn-sm'>Delete</button></th> 
                     </tr>
                     )}
                   </tbody>
         
               </table>
-                <img src={require('./heart.png')}></img>
             </main>
           );
           
         }
+        renderLike() 
+        {}
       }
-      //<FontAwesomeIcon icon="fa-regular fa-heart" />
       
 // The argument movie passed in the movies.map method cannot be the same as the element key or else it will throw an error
 // To have the delete button register which movie is its parent element you can pass the movie object that is iterated
