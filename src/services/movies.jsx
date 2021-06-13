@@ -1,11 +1,12 @@
 import React, {Component} from 'react'
 import {getMovies} from './fakeMovieService'
 
-import Like from './like'
+import Like from './common/like'
 
 class Movies extends Component{
     state ={
         movies: getMovies(),
+
     }
     clickedDelete(movie){
         /* I had to look up the solution to figure out how to dynamically delete selected movies, once the delete button 
@@ -45,7 +46,7 @@ class Movies extends Component{
                        <th>{movie.genre.name}</th>
                        <th>{movie.numberInStock}</th>
                        <th>{movie.dailyRentalRate}</th>
-                       <th><Like/></th>
+                       <th><Like clickLike={() => this.handleLike(movie)} Liked={movie.Liked}/></th>
                        <th><button onClick={() => this.clickedDelete(movie)} className='btn btn-danger btn-sm'>Delete</button></th> 
                     </tr>
                     )}
@@ -56,8 +57,14 @@ class Movies extends Component{
           );
           
         }
-        renderLike() 
-        {}
+      
+        handleLike(movie){
+          const movies = [...this.state.movies]
+          const index = movies.indexOf(movie)
+          movies[index] = {...movie}
+          movies[index].Liked = !movies[index].Liked    
+          this.setState({movies})
+        }
       }
       
 // The argument movie passed in the movies.map method cannot be the same as the element key or else it will throw an error
