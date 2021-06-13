@@ -1,17 +1,12 @@
 import React, {Component} from 'react'
 import {getMovies} from './fakeMovieService'
-import heart from './heart.png'
+
+import Like from './like'
 
 class Movies extends Component{
     state ={
         movies: getMovies(),
     }
-
-    styles = {
-      width: '25px',
-      height: '25px',
-    }
-    
     clickedDelete(movie){
         /* I had to look up the solution to figure out how to dynamically delete selected movies, once the delete button 
         is clicked inside of the table row it passes this function with the parameter movie which is defined in the .map 
@@ -50,7 +45,7 @@ class Movies extends Component{
                        <th>{movie.genre.name}</th>
                        <th>{movie.numberInStock}</th>
                        <th>{movie.dailyRentalRate}</th>
-                       <th><img style={this.styles}src={heart}></img></th>
+                       <th><Like/></th>
                        <th><button onClick={() => this.clickedDelete(movie)} className='btn btn-danger btn-sm'>Delete</button></th> 
                     </tr>
                     )}
