@@ -50,12 +50,14 @@ class Movies extends Component{
                   </tbody>
         
               </table>
+                <img src={require('./heart.png')}></img>
             </main>
           );
-
-    }
-}
-
+          
+        }
+      }
+      //<FontAwesomeIcon icon="fa-regular fa-heart" />
+      
 // The argument movie passed in the movies.map method cannot be the same as the element key or else it will throw an error
 // To have the delete button register which movie is its parent element you can pass the movie object that is iterated
 //To the arguement of the clickedDelete method 
