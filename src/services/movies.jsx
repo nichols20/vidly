@@ -6,9 +6,11 @@ import Pagination from './common/pagination'
 
 class Movies extends Component{
     state ={
-        movies: getMovies()
+        movies: getMovies(),
+        originalMovies: getMovies()
 
     }
+
     clickedDelete(movie){ 
         /* I had to look up the solution to figure out how to dynamically delete selected movies, once the delete button 
         is clicked inside of the table row it passes this function with the parameter movie which is defined in the .map 
@@ -54,10 +56,27 @@ class Movies extends Component{
                   </tbody>
         
               </table>
-               <Pagination/>
+               <Pagination page1 ={() => this.moviesPageOne(this.state.originalMovies)} page2 ={() => this.moviesPageTwo(this.state.movies)} page3={() => this.moviesPageThree()}/>
             </main>
           );
-          
+        }
+
+        moviesPageOne(){
+          const movies = this.state.originalMovies.filter(m => {if (this.state.originalMovies.indexOf(m) < 4) return m})
+          console.log(movies)
+          this.setState({movies})
+        }
+
+        moviesPageTwo(){
+           const movies = this.state.originalMovies.filter(m => {if (this.state.originalMovies.indexOf(m) > 3 && this.state.originalMovies.indexOf(m) < 8) return m})
+           console.log(movies)
+           this.setState({movies})
+        }
+
+        moviesPageThree(){
+          const movies = this.state.originalMovies.filter(m => {if (this.state.originalMovies.indexOf(m) > 7 && this.state.originalMovies.indexOf(m) < 12) return m})
+          console.log(movies)
+          this.setState({movies})
         }
       
         handleLike(movie){
