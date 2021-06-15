@@ -2,13 +2,14 @@ import React, {Component} from 'react'
 import {getMovies} from './fakeMovieService'
 
 import Like from './common/like'
+import Pagination from './common/pagination'
 
 class Movies extends Component{
     state ={
-        movies: getMovies(),
+        movies: getMovies()
 
     }
-    clickedDelete(movie){
+    clickedDelete(movie){ 
         /* I had to look up the solution to figure out how to dynamically delete selected movies, once the delete button 
         is clicked inside of the table row it passes this function with the parameter movie which is defined in the .map 
         function the movie value is the iterated movie object in the this.state.movies array so each button created in the 
@@ -53,6 +54,7 @@ class Movies extends Component{
                   </tbody>
         
               </table>
+               <Pagination/>
             </main>
           );
           

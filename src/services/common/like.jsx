@@ -11,7 +11,7 @@ class Like extends Component {
       }
     
     render() {
-        return (<img style={this.styles}src={this.renderImage()} onClick={this.props.clickLike}></img>);
+        return (<img style={this.styles}src={this.renderImage()} alt='like button' onClick={this.props.clickLike}></img>);
     }
 
     renderImage(){
