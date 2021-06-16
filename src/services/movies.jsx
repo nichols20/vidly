@@ -7,7 +7,8 @@ import Pagination from './common/pagination'
 class Movies extends Component{
     state ={
         movies: getMovies(),
-        originalMovies: getMovies()
+        originalMovies: getMovies(),
+        pageSize: 4
 
     }
 
@@ -24,6 +25,18 @@ class Movies extends Component{
         this.setState({movies: newMovies})
       }
 
+      handleLike(movie){
+        const movies = [...this.state.movies]
+        const index = movies.indexOf(movie)
+        movies[index] = {...movie}
+        movies[index].Liked = !movies[index].Liked    
+        this.setState({movies})
+      }
+
+      handlePageChange = page => {
+        console.log(page)
+      }
+
     render(){
       /* Destructured this.state.movies.length to count then created if statement to illustrate how many movies there were in the
       database and if none were present another iteration would appear */
@@ -38,29 +51,30 @@ class Movies extends Component{
                     <tr>
                       <th>Title</th>
                       <th>Genre</th>
-                      <th>Stock</th>
+                      <th>Stock</th> 
                       <th>Rate</th>
                     </tr>
                   </thead>
                   <tbody>
                     {this.state.movies.map(movie => 
-                     <tr key={movie._id}>
-                       <th style={{paddingLeft: '1rem'}}>{movie.title}</th>
-                       <th>{movie.genre.name}</th>
-                       <th>{movie.numberInStock}</th>
-                       <th>{movie.dailyRentalRate}</th>
-                       <th><Like clickLike={() => this.handleLike(movie)} Liked={movie.Liked}/></th>
-                       <th><button onClick={() => this.clickedDelete(movie)} className='btn btn-danger btn-sm'>Delete</button></th> 
-                    </tr>
+                      <tr key={movie._id}>
+                        <th style={{paddingLeft: '1rem'}}>{movie.title}</th>
+                        <th>{movie.genre.name}</th>
+                        <th>{movie.numberInStock}</th>
+                        <th>{movie.dailyRentalRate}</th>
+                        <th><Like clickLike={() => this.handleLike(movie)} Liked={movie.Liked}/></th>
+                        <th><button onClick={() => this.clickedDelete(movie)} className='btn btn-danger btn-sm'>Delete</button></th> 
+                     </tr>
                     )}
                   </tbody>
         
               </table>
-               <Pagination page1 ={() => this.moviesPageOne(this.state.originalMovies)} page2 ={() => this.moviesPageTwo(this.state.movies)} page3={() => this.moviesPageThree()}/>
+               <Pagination itemsCount={count} pageSize={this.state.pageSize} onPageChange={this.handlePageChange}/>
             </main>
           );
         }
 
+       /*
         moviesPageOne(){
           const movies = this.state.originalMovies.filter(m => {if (this.state.originalMovies.indexOf(m) < 4) return m})
           console.log(movies)
@@ -78,16 +92,9 @@ class Movies extends Component{
           console.log(movies)
           this.setState({movies})
         }
-      
-        handleLike(movie){
-          const movies = [...this.state.movies]
-          const index = movies.indexOf(movie)
-          movies[index] = {...movie}
-          movies[index].Liked = !movies[index].Liked    
-          this.setState({movies})
-        }
+        */
       }
-      
+  
 // The argument movie passed in the movies.map method cannot be the same as the element key or else it will throw an error
 // To have the delete button register which movie is its parent element you can pass the movie object that is iterated
 //To the arguement of the clickedDelete method 
