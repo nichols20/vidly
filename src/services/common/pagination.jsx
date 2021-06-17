@@ -1,8 +1,10 @@
-
+import React, { Component } from 'react';
+import PropTypes from 'prop-types'
 import _ from 'lodash'
 
 const Pagination = (props) => {
-    const {itemsCount, pageSize, onPageChange} = props
+    const {itemsCount, pageSize, currentPage, onPageChange} = props
+    console.log(currentPage)
 
     //returns the smallest integer greater than or equal to the decimal evaluated, kinda works as a force round up
     const pagesCount = Math.ceil(itemsCount / pageSize)
@@ -15,7 +17,7 @@ const Pagination = (props) => {
         <nav className='page navigation example'>
             <ul className='pagination'>
                 {pages.map(page => (
-                 <li className='page-item' key={page}>
+                 <li className={ page === currentPage ? 'page-item active' : 'page-item'} key={page}>
                    <a className='page-link' onClick={() => onPageChange(page)}>{page}</a> 
                  </li>  
                 ))}
@@ -43,4 +45,12 @@ class Pagination extends Component {
     }
 }
  */
+
+// good practice to use propTypes to catch bugs in correlation to typechecking especially with reusable components
+Pagination.propTypes = {
+    itemsCount: PropTypes.number.isRequired,
+     pageSize: PropTypes.number.isRequired, 
+     currentPage: PropTypes.number.isRequired, 
+     onPageChange: PropTypes.func.isRequired
+}
 export default Pagination;

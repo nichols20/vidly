@@ -3,11 +3,13 @@ import {getMovies} from './fakeMovieService'
 
 import Like from './common/like'
 import Pagination from './common/pagination'
+import { Paginate } from './utilities/paginate'
 
 class Movies extends Component{
     state ={
         movies: getMovies(),
         originalMovies: getMovies(),
+        currentPage: 1,
         pageSize: 4
 
     }
@@ -34,15 +36,19 @@ class Movies extends Component{
       }
 
       handlePageChange = page => {
-        console.log(page)
+        this.setState({currentPage: page})
       }
 
     render(){
       /* Destructured this.state.movies.length to count then created if statement to illustrate how many movies there were in the
       database and if none were present another iteration would appear */
       const {length: count} = this.state.movies
+      const {pageSize, currentPage, movies: allMovies} = this.state
 
       if (count === 0) return <h3>There are no movies in the Database.</h3>
+
+      const movies = Paginate(allMovies, currentPage, pageSize)
+
           return (
             <main className = 'container'>
               <h3>Showing {count} Movies in the database</h3>
@@ -56,7 +62,7 @@ class Movies extends Component{
                     </tr>
                   </thead>
                   <tbody>
-                    {this.state.movies.map(movie => 
+                    {movies.map(movie => 
                       <tr key={movie._id}>
                         <th style={{paddingLeft: '1rem'}}>{movie.title}</th>
                         <th>{movie.genre.name}</th>
@@ -69,7 +75,12 @@ class Movies extends Component{
                   </tbody>
         
               </table>
-               <Pagination itemsCount={count} pageSize={this.state.pageSize} onPageChange={this.handlePageChange}/>
+               <Pagination 
+                itemsCount={count} 
+                pageSize={pageSize} 
+                currentPage={currentPage}
+                onPageChange={this.handlePageChange}
+                />
             </main>
           );
         }
