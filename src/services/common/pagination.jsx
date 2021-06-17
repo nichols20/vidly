@@ -13,6 +13,9 @@ const Pagination = (props) => {
     // keeping pagesCount by its self as the end number would return 1, 2, 3 so for us to reach for we had to add a + 1
     const pages = _.range(1, pagesCount + 1)
 
+    // I was shown that a better way to implement this code is to dynamically render the number of page tabs required
+    //based on the amount of items in the array instead of hard coding it. 
+    // this module deals with rendering the number of page tabs needed based on the values
     return ( 
         <nav className='page navigation example'>
             <ul className='pagination'>
@@ -26,25 +29,6 @@ const Pagination = (props) => {
       
       );
 }
-
-/*
-class Pagination extends Component {
-    render() { 
-        return ( 
-        <nav className='page navigation example'>
-            <ul className='pagination'>
-             <li className='page-item' onClick={this.props.page1}>
-                 <a className='page-link' href='#'>1</a> 
-            </li>
-             <li className='page-item' onClick={this.props.page2}><a className='page-link' href='#'>2</a> </li>
-             <li className='page-item' onClick={this.props.page3}><a className='page-link' href='#'>3</a> </li>
-            </ul>
-        </nav> 
-      
-      );
-    }
-}
- */
 
 // good practice to use propTypes to catch bugs in correlation to typechecking especially with reusable components
 Pagination.propTypes = {

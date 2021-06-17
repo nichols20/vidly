@@ -47,6 +47,7 @@ class Movies extends Component{
 
       if (count === 0) return <h3>There are no movies in the Database.</h3>
 
+      //movies equals the new array processed by the Paginate module, this object is updated each time a new page tab is clicked
       const movies = Paginate(allMovies, currentPage, pageSize)
 
           return (
@@ -84,26 +85,6 @@ class Movies extends Component{
             </main>
           );
         }
-
-       /*
-        moviesPageOne(){
-          const movies = this.state.originalMovies.filter(m => {if (this.state.originalMovies.indexOf(m) < 4) return m})
-          console.log(movies)
-          this.setState({movies})
-        }
-
-        moviesPageTwo(){
-           const movies = this.state.originalMovies.filter(m => {if (this.state.originalMovies.indexOf(m) > 3 && this.state.originalMovies.indexOf(m) < 8) return m})
-           console.log(movies)
-           this.setState({movies})
-        }
-
-        moviesPageThree(){
-          const movies = this.state.originalMovies.filter(m => {if (this.state.originalMovies.indexOf(m) > 7 && this.state.originalMovies.indexOf(m) < 12) return m})
-          console.log(movies)
-          this.setState({movies})
-        }
-        */
       }
   
 // The argument movie passed in the movies.map method cannot be the same as the element key or else it will throw an error
