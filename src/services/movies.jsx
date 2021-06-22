@@ -17,7 +17,9 @@ class Movies extends Component{
     }
 
     componentDidMount(){
-      this.setState({ movies: getMovies(), genres: getGenres()})
+      const genres = [{name: 'All Genres'}, ...getGenres()]
+
+      this.setState({ movies: getMovies(), genres})
     }
 
     clickedDelete(movie){ 
@@ -46,7 +48,9 @@ class Movies extends Component{
       }
 
       handleFilter = (genre) => {
-        this.setState({ selectedGenre: genre});
+        //sets currentpage to 1 so movies filter and render even if user is on third page
+        this.setState({ selectedGenre: genre, currentPage: 1});
+        /*
         if (genre === 'all'){
           let movies = this.state.originalMovies
           this.setState({movies})
@@ -55,6 +59,7 @@ class Movies extends Component{
         const moviesHolder = [...this.state.originalMovies]
         const movies = moviesHolder.filter(movie => movie.genre.name === genre)
         this.setState({movies})
+        */
       }
 
 
@@ -62,11 +67,21 @@ class Movies extends Component{
       /* Destructured this.state.movies.length to count then created if statement to illustrate how many movies there were in the
       database and if none were present another iteration would appear */
       const {length: count} = this.state.movies
-      const {pageSize, currentPage, movies: allMovies, genres} = this.state
+      const {pageSize, currentPage, movies: allMovies, genres, selectedGenre} = this.state
       if (count === 0) return <h3>There are no movies in the Database.</h3>
 
+      /* In my previous implementation of the filter method I filtered movies by setting the state with only movies whose
+      genre was selected. it worked however I need to practice to stay away from using the set method as much as possible
+      a better implementation of this is by creating a new object then having it equal the filtered movies state or unfiltered
+      then instead of resetting the state send that variable to the paginate function with either the altered movies array
+      or unaltered. the movies function will then return whatever movies are currently in the database and the state movies
+      array stays the same. this allows you to continue deleting movies and because deleting a movie sets the state but 
+      filtering doesn't create an old state like I had made it do before the movies will stay deleted and not reappear after
+      deleting like it was before. overall the exercise was not too hard creating the filter tabs was easy however 
+      my most trouble was with creating the function */
+      const filtered = selectedGenre && selectedGenre._id ? allMovies.filter(m => m.genre._id === selectedGenre._id) : allMovies
       //movies equals the new array processed by the Paginate module, this object is updated each time a new page tab is clicked
-      const movies = Paginate(allMovies, currentPage, pageSize)
+      const movies = Paginate(filtered, currentPage, pageSize)
 
           return (
               <div className="row">
@@ -74,7 +89,7 @@ class Movies extends Component{
                  <Filter selectedItem={this.state.selectedGenre} genres={genres} handleFilter={this.handleFilter}/>
                 </div>
                 <div className="col">
-                 <h3>Showing {count} Movies in the database</h3>
+                 <h3>Showing {filtered.length} Movies in the database</h3>
                  <table className ='table'>
                     <thead>
                       <tr>
@@ -100,7 +115,7 @@ class Movies extends Component{
                     </tbody>
                   </table>
                   <Pagination
-                   itemsCount={count}
+                   itemsCount={filtered.length}
                    pageSize={pageSize}
                    currentPage={currentPage}
                    onPageChange={this.handlePageChange}
