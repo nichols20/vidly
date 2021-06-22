@@ -46,6 +46,7 @@ class Movies extends Component{
       }
 
       handleFilter = (genre) => {
+        this.setState({ selectedGenre: genre});
         if (genre === 'all'){
           let movies = this.state.originalMovies
           this.setState({movies})
@@ -62,7 +63,6 @@ class Movies extends Component{
       database and if none were present another iteration would appear */
       const {length: count} = this.state.movies
       const {pageSize, currentPage, movies: allMovies, genres} = this.state
-      const {length: numberOfGenres} = this.state.genres
       if (count === 0) return <h3>There are no movies in the Database.</h3>
 
       //movies equals the new array processed by the Paginate module, this object is updated each time a new page tab is clicked
@@ -71,7 +71,7 @@ class Movies extends Component{
           return (
               <div className="row">
                 <div className="col-2">
-                 <Filter genresCount={numberOfGenres} genres={genres} handleFilter={this.handleFilter}/>
+                 <Filter selectedItem={this.state.selectedGenre} genres={genres} handleFilter={this.handleFilter}/>
                 </div>
                 <div className="col">
                  <h3>Showing {count} Movies in the database</h3>
