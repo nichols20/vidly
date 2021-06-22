@@ -16,10 +16,6 @@ class Movies extends Component{
 
     }
 
-    styles = {
-      display: 'flex',
-      justifyContent: 'space-evenly'
-    }
 
     clickedDelete(movie){ 
         /* I had to look up the solution to figure out how to dynamically delete selected movies, once the delete button 
@@ -70,40 +66,44 @@ class Movies extends Component{
       const movies = Paginate(allMovies, currentPage, pageSize)
 
           return (
-            <main className = 'container' style={this.styles}>
-              <Filter genresCount={numberOfGenres} genres={genres} handleFilter={this.handleFilter}/>
-              <div>
-                <h3>Showing {count} Movies in the database</h3>
-                <table className ='table'>
+              <div className="row">
+                <div className="col-2">
+                 <Filter genresCount={numberOfGenres} genres={genres} handleFilter={this.handleFilter}/>
+                </div>
+                <div className="col">
+                 <h3>Showing {count} Movies in the database</h3>
+                 <table className ='table'>
                     <thead>
                       <tr>
                         <th>Title</th>
                         <th>Genre</th>
                         <th>Stock</th>
                         <th>Rate</th>
+                        <th/>
+                        <th/>
                       </tr>
                     </thead>
                     <tbody>
                       {movies.map(movie =>
                         <tr key={movie._id}>
-                          <th style={{paddingLeft: '1rem'}}>{movie.title}</th>
-                          <th>{movie.genre.name}</th>
-                          <th>{movie.numberInStock}</th>
-                          <th>{movie.dailyRentalRate}</th>
-                          <th><Like clickLike={() => this.handleLike(movie)} Liked={movie.Liked}/></th>
-                          <th><button onClick={() => this.clickedDelete(movie)} className='btn btn-danger btn-sm'>Delete</button></th>
+                          <td style={{paddingLeft: '1rem'}}>{movie.title}</td>
+                          <td>{movie.genre.name}</td>
+                          <td>{movie.numberInStock}</td>
+                          <td>{movie.dailyRentalRate}</td>
+                          <td><Like clickLike={() => this.handleLike(movie)} Liked={movie.Liked}/></td>
+                          <td><button onClick={() => this.clickedDelete(movie)} className='btn btn-danger btn-sm'>Delete</button></td>
                        </tr>
                       )}
                     </tbody>
-                </table>
-                 <Pagination
-                  itemsCount={count}
-                  pageSize={pageSize}
-                  currentPage={currentPage}
-                  onPageChange={this.handlePageChange}
+                  </table>
+                  <Pagination
+                   itemsCount={count}
+                   pageSize={pageSize}
+                   currentPage={currentPage}
+                   onPageChange={this.handlePageChange}
                   />
+                </div>
               </div>
-            </main>
           );
         }
       }
