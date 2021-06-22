@@ -36,6 +36,7 @@ class Movies extends Component{
       }
 
       handleLike(movie){
+        console.log(this.state)
         const movies = [...this.state.movies]
         const index = movies.indexOf(movie)
         movies[index] = {...movie}
