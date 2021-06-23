@@ -5,6 +5,7 @@ import MoviesTable from './moviesTable'
 import Pagination from './common/pagination'
 import { Paginate } from './utilities/paginate'
 import Filter from './common/filtering'
+import _ from 'lodash'
 
 class Movies extends Component{
     state ={
@@ -12,7 +13,8 @@ class Movies extends Component{
         genres: [],
         currentPage: 1,
         pageSize: 4,
-        originalMovies: getMovies()
+        originalMovies: getMovies(),
+        sortColumn: {path: 'title', order: 'asc'}
 
     }
 
@@ -65,7 +67,15 @@ class Movies extends Component{
       }
 
       handleSort = path => {
-        console.log(path)
+        const sortColumn = {...this.state.sortColumn}
+        if (sortColumn.path === path)
+          sortColumn.order = (sortColumn.order === 'asc') ? 'desc' : 'asc'
+        else {
+          sortColumn.path = path
+          sortColumn.order = 'asc'
+        }
+        this.setState({ sortColumn })
+
       }
 
 
@@ -73,7 +83,7 @@ class Movies extends Component{
       /* Destructured this.state.movies.length to count then created if statement to illustrate how many movies there were in the
       database and if none were present another iteration would appear */
       const {length: count} = this.state.movies
-      const {pageSize, currentPage, movies: allMovies, genres, selectedGenre} = this.state
+      const {pageSize, currentPage, movies: allMovies, genres, selectedGenre, sortColumn} = this.state
       if (count === 0) return <h3>There are no movies in the Database.</h3>
 
       /* In my previous implementation of the filter method I filtered movies by setting the state with only movies whose
@@ -86,8 +96,10 @@ class Movies extends Component{
       deleting like it was before. overall the exercise was not too hard creating the filter tabs was easy however 
       my most trouble was with creating the function */
       const filtered = selectedGenre && selectedGenre._id ? allMovies.filter(m => m.genre._id === selectedGenre._id) : allMovies
+
+      const sorted = _.orderBy(filtered, [sortColumn.path], [sortColumn.order])
       //movies equals the new array processed by the Paginate module, this object is updated each time a new page tab is clicked
-      const movies = Paginate(filtered, currentPage, pageSize)
+      const movies = Paginate(sorted, currentPage, pageSize)
 
           return (
               <div className="row">
