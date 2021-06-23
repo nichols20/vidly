@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {getMovies} from './fakeMovieService'
 import { getGenres } from './fakeGenreService'
-import Like from './common/like'
+import MoviesTable from './moviesTable'
 import Pagination from './common/pagination'
 import { Paginate } from './utilities/paginate'
 import Filter from './common/filtering'
@@ -22,7 +22,7 @@ class Movies extends Component{
       this.setState({ movies: getMovies(), genres})
     }
 
-    clickedDelete(movie){ 
+    clickedDelete = (movie) => { 
         /* I had to look up the solution to figure out how to dynamically delete selected movies, once the delete button 
         is clicked inside of the table row it passes this function with the parameter movie which is defined in the .map 
         function the movie value is the iterated movie object in the this.state.movies array so each button created in the 
@@ -35,7 +35,9 @@ class Movies extends Component{
         this.setState({movies: newMovies})
       }
 
-      handleLike(movie){
+      //this.state was appearing undefined for the like function because I did not bind the function to the this keyword
+      //I solved this bug by converting the function into an arrow function
+      handleLike = (movie) => {
         const movies = [...this.state.movies]
         const index = movies.indexOf(movie)
         movies[index] = {...movie}
@@ -90,30 +92,7 @@ class Movies extends Component{
                 </div>
                 <div className="col">
                  <h3>Showing {filtered.length} Movies in the database</h3>
-                 <table className ='table'>
-                    <thead>
-                      <tr>
-                        <th>Title</th>
-                        <th>Genre</th>
-                        <th>Stock</th>
-                        <th>Rate</th>
-                        <th/>
-                        <th/>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {movies.map(movie =>
-                        <tr key={movie._id}>
-                          <td style={{paddingLeft: '1rem'}}>{movie.title}</td>
-                          <td>{movie.genre.name}</td>
-                          <td>{movie.numberInStock}</td>
-                          <td>{movie.dailyRentalRate}</td>
-                          <td><Like clickLike={() => this.handleLike(movie)} Liked={movie.Liked}/></td>
-                          <td><button onClick={() => this.clickedDelete(movie)} className='btn btn-danger btn-sm'>Delete</button></td>
-                       </tr>
-                      )}
-                    </tbody>
-                  </table>
+                 <MoviesTable movies={movies} onDelete={this.clickedDelete} onLike={this.handleLike}/>
                   <Pagination
                    itemsCount={filtered.length}
                    pageSize={pageSize}
