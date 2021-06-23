@@ -37,7 +37,7 @@ class Movies extends Component{
 
       //this.state was appearing undefined for the like function because I did not bind the function to the this keyword
       //I solved this bug by converting the function into an arrow function
-      handleLike = (movie) => {
+      handleLike = (movie) => {        
         const movies = [...this.state.movies]
         const index = movies.indexOf(movie)
         movies[index] = {...movie}
@@ -62,6 +62,10 @@ class Movies extends Component{
         const movies = moviesHolder.filter(movie => movie.genre.name === genre)
         this.setState({movies})
         */
+      }
+
+      handleSort = path => {
+        console.log(path)
       }
 
 
@@ -92,7 +96,7 @@ class Movies extends Component{
                 </div>
                 <div className="col">
                  <h3>Showing {filtered.length} Movies in the database</h3>
-                 <MoviesTable movies={movies} onDelete={this.clickedDelete} onLike={this.handleLike}/>
+                 <MoviesTable movies={movies} onDelete={this.clickedDelete} onLike={this.handleLike} onSort={this.handleSort}/> 
                   <Pagination
                    itemsCount={filtered.length}
                    pageSize={pageSize}
