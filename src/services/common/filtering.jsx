@@ -5,7 +5,6 @@
 const Filter = (props) => {
     const {genres, handleFilter, selectedItem} = props
 
-    console.log(selectedItem)
     return (
       <ul className="list-group" >
           {genres.map(genre => (
