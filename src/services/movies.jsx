@@ -66,7 +66,8 @@ class Movies extends Component{
         */
       }
 
-
+      //this function will take the sortColumn parameter passed from moviestable then set the state of the old sortColumn
+      //to the newly passed one
       handleSort = sortColumn => {
     
         this.setState({ sortColumn })
@@ -122,7 +123,7 @@ class Movies extends Component{
                    onPageChange={this.handlePageChange}
                   />
                 </div>
-                
+
               </div>
           );
         }
