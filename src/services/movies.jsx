@@ -39,7 +39,7 @@ class Movies extends Component{
 
       //this.state was appearing undefined for the like function because I did not bind the function to the this keyword
       //I solved this bug by converting the function into an arrow function
-      handleLike = (movie) => {        
+      handleLike = (movie) => { 
         const movies = [...this.state.movies]
         const index = movies.indexOf(movie)
         movies[index] = {...movie}
