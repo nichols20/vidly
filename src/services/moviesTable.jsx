@@ -1,40 +1,25 @@
 import React, { Component } from 'react';
 import Like from './common/like';
+import TableHeader from './common/tableHeader';
 
 
 class MoviesTable extends Component {
-
-  raiseSort = path => {
-    // this function takes the sortcolumn object from the state of movies then reapplies it to a copy const of sortColumn
-    const sortColumn = {...this.props.sortColumn}
-    //if the path of sortcolumn equals the path object thrown in the raiseSort function the sortColumn order
-    //will be descending if the order is ascending and if it's ascending it will change to descending
-    if (sortColumn.path === path)
-      sortColumn.order = (sortColumn.order === 'asc') ? 'desc' : 'asc'
-    //elsewise the sortColumn.path will equal the path object thrown to function parameter and the sortColumn order will be ascending. 
-    else {
-      sortColumn.path = path
-      sortColumn.order = 'asc'
-    }
-    //then finally we call the onSort function and pass the new sortColumn object.
-    this.props.onSort(sortColumn)
-  }
+  
+  columns = [
+    {path: 'title', label: 'Title'},
+    {path: 'genre.name', label: 'Genre'},
+    {path: 'numberInStock', label: 'Stock'},
+    {path: 'dailyRentalRate', label: 'Rate'},
+    {key: 'like'},
+    {key: 'delete'}
+  ]
 
   render() { 
-    const {movies, onDelete, onLike} = this.props
+    const {movies, onDelete, onLike, sortColumn, onSort} = this.props
     
     return ( 
       <table className ='table'>
-      <thead>
-        <tr>
-          <th onClick={() => this.raiseSort('title')}>Title</th>
-          <th onClick={() => this.raiseSort('genre.name')}>Genre</th>
-          <th onClick={() => this.raiseSort('numberInStock')}>Stock</th>
-          <th onClick={() => this.raiseSort('dailyRentalRate')}>Rate</th>
-          <th/>
-          <th/>
-        </tr>
-      </thead>
+        <TableHeader sortColumn={sortColumn} onSort={onSort} columns={this.columns}/>
       <tbody>
         {movies.map(movie =>
           <tr key={movie._id}>
