@@ -75,28 +75,37 @@ class Movies extends Component{
       }
 
 
+      getPagedData = () => {
+        const {pageSize, currentPage, movies: allMovies, genres, selectedGenre, sortColumn} = this.state
+
+       /* In my previous implementation of the filter method I filtered movies by setting the state with only movies whose
+       genre was selected. it worked however I need to practice to stay away from using the set method as much as possible
+       a better implementation of this is by creating a new object then having it equal the filtered movies state or unfiltered
+       then instead of resetting the state send that variable to the paginate function with either the altered movies array
+       or unaltered. the movies function will then return whatever movies are currently in the database and the state movies
+       array stays the same. this allows you to continue deleting movies and because deleting a movie sets the state but 
+       filtering doesn't create an old state like I had made it do before the movies will stay deleted and not reappear after
+       deleting like it was before. overall the exercise was not too hard creating the filter tabs was easy however 
+       my most trouble was with creating the function */
+       const filtered = selectedGenre && selectedGenre._id ? allMovies.filter(m => m.genre._id === selectedGenre._id) : allMovies
+
+       const sorted = _.orderBy(filtered, [sortColumn.path], [sortColumn.order])
+       //movies equals the new array processed by the Paginate module, this object is updated each time a new page tab is clicked
+       const movies = Paginate(sorted, currentPage, pageSize)
+
+       return {totalCount: filtered.length, data: movies}
+      }
+
     render(){
       /* Destructured this.state.movies.length to count then created if statement to illustrate how many movies there were in the
       database and if none were present another iteration would appear */
       const {length: count} = this.state.movies
-      const {pageSize, currentPage, movies: allMovies, genres, selectedGenre, sortColumn} = this.state
+
+      const {pageSize, currentPage, genres, sortColumn} = this.state
+
       if (count === 0) return <h3>There are no movies in the Database.</h3>
 
-      /* In my previous implementation of the filter method I filtered movies by setting the state with only movies whose
-      genre was selected. it worked however I need to practice to stay away from using the set method as much as possible
-      a better implementation of this is by creating a new object then having it equal the filtered movies state or unfiltered
-      then instead of resetting the state send that variable to the paginate function with either the altered movies array
-      or unaltered. the movies function will then return whatever movies are currently in the database and the state movies
-      array stays the same. this allows you to continue deleting movies and because deleting a movie sets the state but 
-      filtering doesn't create an old state like I had made it do before the movies will stay deleted and not reappear after
-      deleting like it was before. overall the exercise was not too hard creating the filter tabs was easy however 
-      my most trouble was with creating the function */
-      const filtered = selectedGenre && selectedGenre._id ? allMovies.filter(m => m.genre._id === selectedGenre._id) : allMovies
-
-      const sorted = _.orderBy(filtered, [sortColumn.path], [sortColumn.order])
-      //movies equals the new array processed by the Paginate module, this object is updated each time a new page tab is clicked
-      const movies = Paginate(sorted, currentPage, pageSize)
-
+      const {totalCount, data: movies} = this.getPagedData()
           return (
               <div className="row">
 
@@ -106,7 +115,7 @@ class Movies extends Component{
                 
                 <div className="col">
                  
-                 <h3>Showing {filtered.length} Movies in the database</h3>
+                 <h3>Showing {totalCount} Movies in the database</h3>
                  
                  <MoviesTable 
                    movies={movies} 
@@ -117,7 +126,7 @@ class Movies extends Component{
                    />
 
                   <Pagination
-                   itemsCount={filtered.length}
+                   itemsCount={totalCount}
                    pageSize={pageSize}
                    currentPage={currentPage}
                    onPageChange={this.handlePageChange}
