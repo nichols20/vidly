@@ -2,8 +2,7 @@
 //without a setState
 //I explain the solution in the movies component above the object(filtered)
 
-const Filter = (props) => {
-    const {genres, handleFilter, selectedItem} = props
+const Filter = ({genres, handleFilter, selectedItem}) => {
 
     return (
       <ul className="list-group" >

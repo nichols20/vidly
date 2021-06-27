@@ -2,8 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types'
 import _ from 'lodash'
 
-const Pagination = (props) => {
-    const {itemsCount, pageSize, currentPage, onPageChange} = props
+const Pagination = ({itemsCount, pageSize, currentPage, onPageChange}) => {
 
     //returns the smallest integer greater than or equal to the decimal evaluated, kinda works as a force round up
     const pagesCount = Math.ceil(itemsCount / pageSize)
