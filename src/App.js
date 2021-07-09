@@ -1,65 +1,24 @@
 import './services/fakeMovieService'
 import './App.css';
-import { getMovies } from './services/fakeMovieService';
+import NavBar from './navbar';
+import Movies from './services/movies';
+import { Route } from 'react-router-dom';
 
 
 function App() {
-  let styles = {
-    fontSize: 30,
-    width: '100%'
-  }
-  let tableRowStyles = {
-    borderTop: '2px solid',
-    borderBottom: '2px solid',
-    width: '100%'
-  }
-
-  let movies = getMovies()
-
-  let movieCount = 0
-
-  let clickedDelete = movie =>{
-    const newMovies = movies.filter(m => m._id !== movie._id)
-    movies = newMovies
-  }
-
-  let iterateMovies = ()=>{
-    // The argument movie passed in the movies.map method cannot be the same as the element key or else it will throw an error
-    // To have the delete button register which movie is its parent element you can pass the movie object that is iterated
-    //To the arguement of the clickedDelete method 
-    return movies.map(movie =>
-     <tr style={tableRowStyles} key={movie._id}>
-      <th style={{paddingLeft: '1rem'}}>{movie.title}</th>
-      <th>{movie.genre.name}</th>
-      <th>{movie.numberInStock}</th>
-      <th>{movie.dailyRentalRate}</th>
-      <th><button onClick={() => clickedDelete(movie, movie._id)} className='btn btn-danger btn-sm'>Delete</button></th> 
-     </tr>
-    )
-  }
-  
-  let countMovies = () => {
-    return (movieCount === 0) ? 'There are no movies in the Database' : `There are ${movieCount} movies in the database`
-  }
   return (
-    <main className = 'container'>
-      <h1>{countMovies()}</h1>
-      <table style ={styles}>
-          <thead>
-            <tr style ={tableRowStyles}>
-              <th style = {{paddingLeft: '1rem'}}>Title</th>
-              <th>Genre</th>
-              <th>Stock</th>
-              <th>Rate</th>
-            </tr>
-          </thead>
-          <tbody>
-            {iterateMovies()}
-          </tbody>
+    <div>
+      <NavBar />
 
-      </table>
-    </main>
+      <div>
+      <Route path='/Movies' component={Movies}/>
+      </div>
+
+    </div>
   );
 }
 
+//created Route element with the path /movies which will display the movies component when the url equals the designated
+//path. I realized the NavBar will be seperate from the content created so I created a navbar component to keep the code
+// related together and clean. 
 export default App;
