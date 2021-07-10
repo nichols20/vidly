@@ -10,6 +10,7 @@ class NavBar extends Component {
             <nav className='navbar bg-dark'>
                     <NavLink className=' nav-link ' to='/Movies'>Movies</NavLink>
                     <NavLink className=' nav-link ' to='/Customers'>Customers</NavLink>
+                    <NavLink className=' nav-link ' to='/Rentals'>Rentals</NavLink>
             </nav>
          );
     }

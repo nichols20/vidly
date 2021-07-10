@@ -5,6 +5,7 @@ import Movies from './services/movies';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import NotFound from './services/common/notfound';
 import Customers from './services/customers';
+import Rentals from './services/rentals';
 
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
 
       <div>
       <Switch>
+        <Route path='/Rentals' component={Rentals}/>
         <Route path='/Customers' component={Customers}/>
         <Route path='/not-found' component={NotFound}/>
         <Route path='/Movies' component={Movies}/>
