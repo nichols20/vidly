@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import { NavLink, Route } from 'react-router-dom';
-import Movies from './services/movies';
+import Movies from './movies';
+import 'bootstrap/dist/css/bootstrap.css';
 
 class NavBar extends Component {
     state = {  }
     render() { 
         return (
             <nav className='navbar bg-dark'>
-                <NavLink to='/Movies'>Movies</NavLink>
+                    <NavLink className=' nav-link ' to='/Movies'>Movies</NavLink>
+                    <NavLink className=' nav-link ' to='/Customers'>Customers</NavLink>
             </nav>
          );
     }
