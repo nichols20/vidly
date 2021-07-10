@@ -4,13 +4,19 @@ import Movies from './movies';
 import 'bootstrap/dist/css/bootstrap.css';
 
 class NavBar extends Component {
-    state = {  }
+    styles = { 
+        fontSize: '21px',
+        color: 'white'
+     }
     render() { 
         return (
-            <nav className='navbar bg-dark'>
-                    <NavLink className=' nav-link ' to='/Movies'>Movies</NavLink>
-                    <NavLink className=' nav-link ' to='/Customers'>Customers</NavLink>
-                    <NavLink className=' nav-link ' to='/Rentals'>Rentals</NavLink>
+            <nav className='navbar navbar-expand bg-dark mb-5'>
+                <div className='m-2'>
+                    <h1>Vidly</h1>
+                </div>
+                        <NavLink className=' nav-link ' style={this.styles} to='/Movies'>Movies</NavLink>
+                        <NavLink className=' nav-link ' style={this.styles} to='/Customers'>Customers</NavLink>
+                        <NavLink className=' nav-link ' style={this.styles} to='/Rentals'>Rentals</NavLink>
             </nav>
          );
     }
