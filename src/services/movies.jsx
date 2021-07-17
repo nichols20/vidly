@@ -76,7 +76,7 @@ class Movies extends Component{
 
 
       getPagedData = () => {
-        const {pageSize, currentPage, movies: allMovies, genres, selectedGenre, sortColumn} = this.state
+        const {pageSize, currentPage, movies: allMovies, selectedGenre, sortColumn} = this.state
 
        /* In my previous implementation of the filter method I filtered movies by setting the state with only movies whose
        genre was selected. it worked however I need to practice to stay away from using the set method as much as possible
