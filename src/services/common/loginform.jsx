@@ -7,11 +7,17 @@ class LoginForm extends Component {
         paddingLeft: "2rem"
     }
 
+    handleSubmit = e => {
+        e.preventDefault()
+
+        //call the server 
+        console.log('submitted')
+    }
     render() { 
         return ( 
             <div>
                 <h1>Login</h1>
-                <form>
+                <form onSubmit={this.handleSubmit}>
                     <div className="form-group mb-3" style={this.styles}>
                         <label htmlFor="username" className="form-label">Username</label>
                         <input id='username' type="text" className="form-control" />

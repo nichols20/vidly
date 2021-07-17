@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { NavLink, Route } from 'react-router-dom';
-import Movies from './movies';
+import { NavLink} from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.css';
 
 class NavBar extends Component {
