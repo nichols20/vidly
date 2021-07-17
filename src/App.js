@@ -1,12 +1,13 @@
+import { Redirect, Route, Switch } from 'react-router-dom';
 import './services/fakeMovieService'
 import './App.css';
 import NavBar from './services/navbar';
 import Movies from './services/movies';
-import { Redirect, Route, Switch } from 'react-router-dom';
-import NotFound from './services/common/notfound';
-import Customers from './services/customers';
 import Rentals from './services/rentals';
+import Customers from './services/customers';
 import MovieForm from './services/movieform';
+import NotFound from './services/common/notfound';
+import LoginForm from './services/common/loginform';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
 
       <div>
       <Switch>
+        <Route path='/login' component={LoginForm}/>
         <Route path='/Rentals' component={Rentals}/>
         <Route path='/Customers' component={Customers}/>
         <Route path='/not-found' component={NotFound}/>
