@@ -37,8 +37,11 @@ class LoginForm extends Component {
 
         //this errors object will either equal null or the errors object that was defined in the validate function
         const errors = this.validate()
-        console.log(errors)
-        this.setState({ errors })
+        //sets the state errors to equal the locally defined errors if truthy if not it will be set to equal an empty object,
+        //this is done to prevent a bug from occuring; The bug would occur if the errors object equalled null because in later
+        //code we target the error.username property this you can't do if the  error object equals null because you can't 
+        //target null.username this will just result in your application crashing. errors should always be set to an object!!
+        this.setState({ errors: errors || {} })
         //if there are properties inside the errors object we will return from here and stop the function from submitting the form if not then the function will submit
         if (errors) return;
 
@@ -54,7 +57,7 @@ class LoginForm extends Component {
     };
 
     render() { 
-        const {account} = this.state
+        const {account, errors} = this.state
         return ( 
             <div>
                 <h1>Login</h1>
@@ -66,7 +69,8 @@ class LoginForm extends Component {
                      value={account.username} 
                      label={"Username"} 
                      onChange={this.handleChange}
-                     styles={this.styles} 
+                     styles={this.styles}
+                     error={errors.username} 
                     />
 
                     <Input
@@ -75,6 +79,7 @@ class LoginForm extends Component {
                      label={"Password"}
                      onChange={this.handleChange}
                      styles={this.styles}
+                     error={errors.password}
                     />
 
                     <button className="btn btn-primary" >Login</button>
