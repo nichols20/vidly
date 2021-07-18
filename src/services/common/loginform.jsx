@@ -8,6 +8,10 @@ class LoginForm extends Component {
         paddingLeft: "2rem"
     }
 
+    state = {
+        account: {username: '', password: ''}
+    }
+
     username = React.createRef()
 
 
@@ -27,20 +31,49 @@ class LoginForm extends Component {
         //call the server 
         console.log('submitted')
     }
+
+    handleChange = ({currentTarget: input}) => {
+        const account = {...this.state.account}
+        account[input.name] = input.value;
+        this.setState({ account })
+    };
+
     render() { 
+        const {account} = this.state
         return ( 
             <div>
                 <h1>Login</h1>
+
                 <form onSubmit={this.handleSubmit}>
                     <div className="form-group mb-3" style={this.styles}>
                         <label htmlFor="username" className="form-label">Username</label>
-                        <input autoFocus ref={this.username} id='username' type="text" className="form-control" />
+                        <input 
+                         autoFocus
+                         value = {account.username}
+                         onChange={this.handleChange} 
+                         name="username" 
+                         id='username' 
+                         type="text" 
+                         className="form-control" 
+                         />
                     </div>
                     <div className="form-group mb-3" style={this.styles}>
+
                         <label htmlFor="Password">Password</label>
-                        <input id='Password' type="text" className="form-control" />
+
+                        <input 
+                         value={account.password} 
+                         onChange={this.handleChange}
+                         name='password'
+                         id='Password' 
+                         type="text" 
+                         className="form-control" 
+                         />
+
                     </div>
+
                     <button className="btn btn-primary" >Login</button>
+                
                 </form>
             </div>
          );
