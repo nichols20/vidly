@@ -50,10 +50,38 @@ class LoginForm extends Component {
         console.log('submitted')
     }
 
+    validateProperty = ({name, value}) => {
+        if (name === 'username') {
+            if (value.trim() === '') return 'Username is required'
+        }
+
+        if (name === 'password') {
+            if (value.trim() === '') return 'Password is required'
+        }
+        
+
+    }
+
     handleChange = ({currentTarget: input}) => {
+        /*Now that I have created a validate function on form submission I want to create a
+        method that will validate the form after each change in the input field. First
+        I'm going to define an errors object that will take the value of the errors property
+        inside the state object.*/
+        const errors = {...this.state.errors}
+        /* Then I created a seperate errorMessage object that will equal a string describing the
+        error that is occuring this message will then be the value to the errors name property  */
+        const errorMessage = this.validateProperty(input)
+        /*Then if the errorMessage object is truthy we're going to set the value to the errors 
+        property that is defined is the bracket. Meaning if the input name is username the code
+        will set the value to the username object and if the input name is password vice versa */
+        if (errorMessage) errors[input.name] = errorMessage
+        /* If we don't get an error message we will then delete the errors property so that 
+        the error message will disappear. */
+        else delete errors[input.name]
+
         const account = {...this.state.account}
         account[input.name] = input.value;
-        this.setState({ account })
+        this.setState({ account, errors })
     };
 
     render() { 
