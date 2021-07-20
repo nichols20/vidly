@@ -14,33 +14,22 @@ class LoginForm extends Component {
   };
 
   /* the schema doesn't need to be apart of the state because the schema isn't supposed to change
-   */
+   the .label function allows you to create a friendly label for users to see
+   instead of the label defined as the object.*/
   schema = {
-    username: Joi.string().required(),
-    password: Joi.string().required(),
+    username: Joi.string().required().label("Username"),
+    password: Joi.string().required().label("Password"),
   };
 
   validate = () => {
-    const result = Joi.validate(this.state.account, this.schema, {
-      abortEarly: false,
-    });
-    console.log(result);
+    const options = { abortEarly: false };
+    const { error } = Joi.validate(this.state.account, this.schema, options);
+    if (!error) return null;
 
-    const { account } = this.state;
     const errors = {};
-
-    if (account.username.trim() === "")
-      errors.username = "Username is required";
-
-    if (account.password.trim() === "")
-      errors.password = "Password is required";
-
-    // If there are no properties inside the errors object the validate function will return null signifying no errors. If there are properties inside
-    //the errors object the function will return the errors object
-    return Object.keys(errors).length === 0 ? null : errors;
+    for (let item of error.details) errors[item.path[0]] = item.message;
+    return errors;
   };
-
-  username = React.createRef();
 
   handleSubmit = (e) => {
     //this stops the form from commiting a full page reload. Prevents default action
@@ -134,3 +123,4 @@ export default LoginForm;
 //const username = this.username.current.value
 //this ref has a property current which returns the dom element allowing us to access the value property.
 //minimize the use of refs when it comes to building applications.
+//username = React.createRef();
