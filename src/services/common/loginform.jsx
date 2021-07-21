@@ -50,13 +50,19 @@ class LoginForm extends Component {
   };
 
   validateProperty = ({ name, value }) => {
-    if (name === "username") {
-      if (value.trim() === "") return "Username is required";
-    }
-
-    if (name === "password") {
-      if (value.trim() === "") return "Password is required";
-    }
+    //Instead of heard coding username or password to equal the input value we can use computed properties to simplify this issue
+    //Using square brackets allows you to pass a defined object as the name of a newly defined object. In this scenario [name] will
+    //either equal username or password and it will set the value of that property to whatever value was passed through this function.
+    //[username] : 'jimmyjim123'
+    const obj = { [name]: value };
+    /* the second property I need to pass in the joi.validate function is the schema however currently we cannot pass this.schema because 
+     that will not only validate the whole form when we are just trying to validate one single input but the system will also send errors back
+     so to solve this problem I'm going to create a schema object that will dynamically pass & validate the selected input.*/
+    //My attempt to solve this was setting the [name] value to Joi.string().required().label() however doing this is more work because we
+    //already have an object that has this value stored a better way to write this would be setting it to this.
+    const schema = { [name]: this.schema[name] }; //this is cleaner and easier to read
+    const { error } = Joi.validate(obj, schema);
+    return error ? error.details[0].message : null;
   };
 
   handleChange = ({ currentTarget: input }) => {
