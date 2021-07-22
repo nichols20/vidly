@@ -111,7 +111,9 @@ class LoginForm extends Component {
             error={errors.password}
           />
 
-          <button className="btn btn-primary">Login</button>
+          <button disabled={this.validate()} className="btn btn-primary">
+            Login
+          </button>
         </form>
       </div>
     );
@@ -119,6 +121,14 @@ class LoginForm extends Component {
 }
 
 export default LoginForm;
+
+/* In this next lesson we wanted to disbale the login button if there are errors present and enable it
+when there are no errors present. We can accomplish this by using the disabled property inside of the button element
+then you set that property to either true or false to dictate whether or not the element will be disabled. Instead of writing
+a function to determine whether or not we should disable the button we can simply set the this.validate() function to determine
+this. That is because if there are no errors the function will return null which is considered falsy meaning the button will not 
+be disabled. Vice versa if there are errors returned that would make the object truthy which is the same as writing true, resulting
+in the button being disabled. This implementation makes the code cleaner and easier to process.*/
 
 //const userName = document.getElementById('username').value
 //this would be the solution to obtain the value of an input field in vanilla javascript, however this isn't the approach
