@@ -1,9 +1,33 @@
-import React, { Component } from "react";
+import React from "react";
+import Form from "./form";
+import Joi from "joi-browser";
+class RegisterForm extends Form {
+  state = {
+    data: { username: "", password: "", name: "" },
+    errors: {},
+  };
 
-class RegisterForm extends Component {
-  state = {};
+  schema = {
+    username: Joi.string().required().label("Username").email(),
+    password: Joi.string().required().label("Password").min(5),
+    name: Joi.string().required().label("Name"),
+  };
+
+  doSubmit = () => {
+    console.log("Submitted");
+  };
+
   render() {
-    return <h1>hey</h1>;
+    return (
+      <div>
+        <form onSubmit={this.handleSubmit}>
+          {this.renderInput("username", "Username", "email")}
+          {this.renderInput("password", "Password", "Password")}
+          {this.renderInput("name", "Name")}
+          {this.renderButton("Register")}
+        </form>
+      </div>
+    );
   }
 }
 
