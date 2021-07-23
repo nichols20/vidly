@@ -3,9 +3,29 @@ import Joi from "joi-browser";
 import Form from "./form";
 
 class NewMovie extends Form {
-  state = {};
+  state = {
+    data: { title: "" },
+    errors: {},
+  };
+
+  schema = {
+    title: Joi.string().required().label("Title"),
+  };
+
+  doSubmit = () => {
+    console.log("submitted");
+  };
+
   render() {
-    return <h1>New Movie</h1>;
+    return (
+      <div>
+        <h1>Movie Form</h1>
+        <form onSubmit={this.handleSubmit}>
+          {this.renderInput("title", "Title")}
+          {this.renderButton("Save")}
+        </form>
+      </div>
+    );
   }
 }
 
