@@ -1,27 +1,27 @@
-import React from 'react';
+import React from "react";
 
-const Input = ({name, label, value, onChange, styles, error}) => {
-    return ( 
-        <div className="form-group mb-3" style={styles}>
-            
-            <label htmlFor={name} className="form-label">{ label }</label>
-            
-            <input                      
-             autoFocus
-             value = {value}
-             onChange={onChange} 
-             name={name} 
-             id={name} 
-             type="text" 
-             className="form-control" 
-            
-            />
+const Input = ({ name, label, value, onChange, styles, error, type }) => {
+  return (
+    <div className="form-group mb-3" style={styles}>
+      <label htmlFor={name} className="form-label">
+        {label}
+      </label>
 
-            { error && <div className="alert alert-danger">{error}</div> }
-       </div>
-     );
-}
- 
+      <input
+        autoFocus
+        value={value}
+        onChange={onChange}
+        name={name}
+        id={name}
+        type={type}
+        className="form-control"
+      />
+
+      {error && <div className="alert alert-danger">{error}</div>}
+    </div>
+  );
+};
+
 export default Input;
 
 /* After the input element I added a conditional state that will dynamically render a div. If the error object is truthy
