@@ -1,13 +1,14 @@
-import { Redirect, Route, Switch } from 'react-router-dom';
-import './services/fakeMovieService'
-import './App.css';
-import NavBar from './services/navbar';
-import Movies from './services/movies';
-import Rentals from './services/rentals';
-import Customers from './services/customers';
-import MovieForm from './services/movieform';
-import NotFound from './services/common/notfound';
-import LoginForm from './services/common/loginform';
+import { Redirect, Route, Switch } from "react-router-dom";
+import "./services/fakeMovieService";
+import "./App.css";
+import NavBar from "./services/navbar";
+import Movies from "./services/movies";
+import Rentals from "./services/rentals";
+import Customers from "./services/customers";
+import MovieForm from "./services/movieform";
+import NotFound from "./services/common/notfound";
+import LoginForm from "./services/common/loginform";
+import RegisterForm from "./services/common/registerform";
 
 function App() {
   return (
@@ -15,18 +16,18 @@ function App() {
       <NavBar />
 
       <div>
-      <Switch>
-        <Route path='/login' component={LoginForm}/>
-        <Route path='/Rentals' component={Rentals}/>
-        <Route path='/Customers' component={Customers}/>
-        <Route path='/not-found' component={NotFound}/>
-        <Route path='/Movies/:id' component={MovieForm}/>
-        <Route path='/Movies' component={Movies}/>
-        <Redirect exact from='/' to='/movies'/>
-        <Redirect to='/not-found'/>
-      </Switch>
+        <Switch>
+          <Route path="/Register" component={RegisterForm} />
+          <Route path="/login" component={LoginForm} />
+          <Route path="/Rentals" component={Rentals} />
+          <Route path="/Customers" component={Customers} />
+          <Route path="/not-found" component={NotFound} />
+          <Route path="/Movies/:id" component={MovieForm} />
+          <Route path="/Movies" component={Movies} />
+          <Redirect exact from="/" to="/movies" />
+          <Redirect to="/not-found" />
+        </Switch>
       </div>
-
     </div>
   );
 }
