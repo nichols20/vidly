@@ -93,10 +93,12 @@ export function saveMovie(movie) {
   movieInDb.Liked = false;
 
   if (!movieInDb._id) {
-    movieInDb._id = Date.now();
+    movieInDb._id = `${Date.now()}`;
     movies.push(movieInDb);
   }
 
+  console.log(movie);
+  console.log(movieInDb);
   return movieInDb;
 }
 
