@@ -4,32 +4,15 @@ import { saveMovie } from "./fakeMovieService";
 import Joi from "joi-browser";
 import Form from "./common/form";
 
-/*
-const MovieForm = ({ match, history }) => {
-  const movie = getMovie(match.params.id);
-  console.log(movie);
-
-
-  return (
-    <div>
-      <h1 className="m-4">Movie Form {match.params.id}</h1>
-      <button
-        className="btn btn-primary m-4"
-        onClick={() => history.push("/Movies")}
-      >
-        Save
-      </button>
-    </div>
-  );
-};
-
-export default MovieForm;
-
-*/
-
+/*Inside of this component I'm aiming to create a MovieForm that will populate the inputs of a saved movie and allows the user to edit those
+inputs to then save it and push the reedited movie object back to the database */
 class MovieForm extends Form {
+  /*First I created a movie Object that takes the getMovie function with the match.params.id paramter This is supposed to contain the id of the selected
+  movie the function will then search in the movies array for an object with that corresponding Id and then will return that object. */
   movie = getMovie(this.props.match.params.id);
 
+  /*AfterWards I created a state with the data and errors object. Inside of data I have title genre numberInStock and dailyRentalRate which
+  all equal their previous input values and will be displayed as such until the user edits it himself. */
   state = {
     data: {
       title: this.movie.title,
@@ -40,6 +23,8 @@ class MovieForm extends Form {
     errors: {},
   };
 
+  /*I created a standard schema the only difference in this one Is the Joi.number() which requires numerical inputs instead of alphabet characters.
+  I also gave them ranges depending on the input that I was working with. */
   schema = {
     title: Joi.string().required().label("Title"),
     genre: Joi.string().required().label("Genre"),
@@ -51,6 +36,10 @@ class MovieForm extends Form {
     dailyRentalRate: Joi.number().required().label("Rate").min(0).max(10),
   };
 
+  /*Once the user clicks save an initialized movie object will take the movie attributes passed inside of the data state it will also take on the id of
+  the chosen movie as well as the boolean statement of whether or not it's been liked. We then call the saveMovie function which takes the edited movie
+  object and updates it to the movies array. Finally we use this.props.history.push to redirect the user back to the movies page upon completion of the movie
+  form. */
   doSubmit = () => {
     const movie = this.state.data;
     movie._id = this.movie._id;
