@@ -7,6 +7,7 @@ import { Paginate } from "./utilities/paginate";
 import Filter from "./common/filtering";
 import _ from "lodash";
 import { Link } from "react-router-dom";
+import SearchBar from "./common/searchbar";
 
 class Movies extends Component {
   state = {
@@ -126,6 +127,8 @@ class Movies extends Component {
           <Link className="btn btn-primary mb-3" to="/Movies/new">
             New Movie
           </Link>
+
+          <SearchBar />
 
           <h3>Showing {totalCount} Movies in the database</h3>
 
