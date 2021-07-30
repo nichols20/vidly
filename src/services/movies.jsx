@@ -15,7 +15,8 @@ class Movies extends Component {
     genres: [],
     currentPage: 1,
     pageSize: 4,
-    originalMovies: getMovies(),
+    searchQuery: "",
+    selectedGenre: null,
     sortColumn: { path: "title", order: "asc" },
   };
 
@@ -80,6 +81,7 @@ class Movies extends Component {
       movies: allMovies,
       selectedGenre,
       sortColumn,
+      searchQuery,
     } = this.state;
 
     /* In my previous implementation of the filter method I filtered movies by setting the state with only movies whose
@@ -91,10 +93,13 @@ class Movies extends Component {
        filtering doesn't create an old state like I had made it do before the movies will stay deleted and not reappear after
        deleting like it was before. overall the exercise was not too hard creating the filter tabs was easy however 
        my most trouble was with creating the function */
-    const filtered =
-      selectedGenre && selectedGenre._id
-        ? allMovies.filter((m) => m.genre._id === selectedGenre._id)
-        : allMovies;
+    let filtered = allMovies;
+    if (searchQuery)
+      filtered = allMovies.filter((m) =>
+        m.title.toLowerCase().startsWith(searchQuery.toLowerCase())
+      );
+    else if (selectedGenre && selectedGenre._id)
+      filtered = allMovies.filter((m) => m.genre._id === selectedGenre._id);
 
     const sorted = _.orderBy(filtered, [sortColumn.path], [sortColumn.order]);
     //movies equals the new array processed by the Paginate module, this object is updated each time a new page tab is clicked
@@ -103,12 +108,17 @@ class Movies extends Component {
     return { totalCount: filtered.length, data: movies };
   };
 
+  handleSearch = (query) => {
+    this.setState({ searchQuery: query, selectedGenre: null, currentPage: 1 });
+  };
+
   render() {
     /* Destructured this.state.movies.length to count then created if statement to illustrate how many movies there were in the
       database and if none were present another iteration would appear */
     const { length: count } = this.state.movies;
 
-    const { pageSize, currentPage, genres, sortColumn } = this.state;
+    const { pageSize, currentPage, genres, sortColumn, searchQuery } =
+      this.state;
 
     if (count === 0) return <h3>There are no movies in the Database.</h3>;
 
@@ -128,7 +138,7 @@ class Movies extends Component {
             New Movie
           </Link>
 
-          <SearchBar />
+          <SearchBar onChange={this.handleSearch} value={searchQuery} />
 
           <h3>Showing {totalCount} Movies in the database</h3>
 
