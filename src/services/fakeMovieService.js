@@ -76,8 +76,12 @@ const movies = [
   },
 ];
 
-export function getMovies() {
-  return movies;
+const axios = require("axios");
+
+export async function getMovies() {
+  return await axios
+    .get("http://localhost:3900/api/movies")
+    .catch((error) => console.log(error));
 }
 
 export function getMovie(id) {

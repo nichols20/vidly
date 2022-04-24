@@ -20,10 +20,13 @@ class Movies extends Component {
     sortColumn: { path: "title", order: "asc" },
   };
 
-  componentDidMount() {
-    const genres = [{ name: "All Genres" }, ...getGenres()];
+  async componentDidMount() {
+    const requestGenre = await getGenres();
+    const requestMovie = await getMovies();
 
-    this.setState({ movies: getMovies(), genres });
+    const genres = [{ name: "All Genres" }, ...requestGenre.data];
+
+    this.setState({ movies: requestMovie.data, genres });
   }
 
   clickedDelete = (movie) => {
