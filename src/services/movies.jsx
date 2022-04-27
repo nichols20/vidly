@@ -24,6 +24,8 @@ class Movies extends Component {
     const requestGenre = await getGenres();
     const requestMovie = await getMovies();
 
+    console.log(requestMovie);
+
     const genres = [{ name: "All Genres" }, ...requestGenre.data];
 
     this.setState({ movies: requestMovie.data, genres });

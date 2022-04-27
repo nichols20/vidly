@@ -1,4 +1,5 @@
 import * as genresAPI from "./fakeGenreService";
+import config from "./config.json";
 
 const movies = [
   {
@@ -80,7 +81,7 @@ const axios = require("axios");
 
 export async function getMovies() {
   return await axios
-    .get("http://localhost:3900/api/movies")
+    .get(`${config["vidly-api"]}/movies`)
     .catch((error) => console.log(error));
 }
 

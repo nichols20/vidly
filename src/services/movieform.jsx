@@ -47,6 +47,7 @@ class MovieForm extends Form {
     saveMovie(movie);
     this.props.history.push("/Movies");
   };
+
   render() {
     return (
       <div>
