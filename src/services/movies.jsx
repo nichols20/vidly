@@ -8,6 +8,7 @@ import Filter from "./common/filtering";
 import _ from "lodash";
 import { Link } from "react-router-dom";
 import SearchBar from "./common/searchbar";
+import { getMovie } from "./fakeMovieService";
 
 class Movies extends Component {
   state = {
@@ -23,6 +24,8 @@ class Movies extends Component {
   async componentDidMount() {
     const requestGenre = await getGenres();
     const requestMovie = await getMovies();
+    const movie = await getMovie("618093a472a0c9022d61ac86");
+    console.log(movie.data);
 
     console.log(requestMovie);
 

@@ -85,8 +85,10 @@ export async function getMovies() {
     .catch((error) => console.log(error));
 }
 
-export function getMovie(id) {
-  return movies.find((m) => m._id === id);
+export async function getMovie(id) {
+  return await axios
+    .get(`${config["vidly-api"]}/movies/${id}`)
+    .catch((error) => console.log(error));
 }
 
 export function saveMovie(movie) {

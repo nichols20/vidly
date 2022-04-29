@@ -7,18 +7,31 @@ import Form from "./common/form";
 /*Inside of this component I'm aiming to create a MovieForm that will populate the inputs of a saved movie and allows the user to edit those
 inputs to then save it and push the reedited movie object back to the database */
 class MovieForm extends Form {
+  async componentDidMount() {
+    let movie = await getMovie(this.props.match.params.id);
+
+    this.setState({
+      data: {
+        title: movie.data.title,
+        genre: movie.data.genre.name,
+        numberInStock: movie.data.numberInStock,
+        dailyRentalRate: movie.data.dailyRentalRate,
+      },
+    });
+  }
+
   /*First I created a movie Object that takes the getMovie function with the match.params.id paramter This is supposed to contain the id of the selected
   movie the function will then search in the movies array for an object with that corresponding Id and then will return that object. */
-  movie = getMovie(this.props.match.params.id);
 
   /*AfterWards I created a state with the data and errors object. Inside of data I have title genre numberInStock and dailyRentalRate which
   all equal their previous input values and will be displayed as such until the user edits it himself. */
+
   state = {
     data: {
-      title: this.movie.title,
-      genre: this.movie.genre.name,
-      numberInStock: this.movie.numberInStock,
-      dailyRentalRate: this.movie.dailyRentalRate,
+      title: "",
+      genre: "",
+      numberInStock: "",
+      dailyRentalRate: "",
     },
     errors: {},
   };
@@ -42,8 +55,7 @@ class MovieForm extends Form {
   form. */
   doSubmit = () => {
     const movie = this.state.data;
-    movie._id = this.movie._id;
-    movie.Liked = this.movie.Liked;
+    //movie.Liked = this.movie.Liked;
     saveMovie(movie);
     this.props.history.push("/Movies");
   };
