@@ -12,6 +12,7 @@ import RegisterForm from "./services/common/registerform";
 import NewMovie from "./services/common/newmovie";
 import "./services/fakeMovieService";
 import "./App.css";
+import Logout from "./services/common/logout";
 
 class App extends Component {
   state = {};
@@ -32,6 +33,7 @@ class App extends Component {
         <div>
           <Switch>
             <Route path="/Register" component={RegisterForm} />
+            <Route path="/Logout" component={Logout} />
             <Route path="/login" component={LoginForm} />
             <Route path="/Rentals" component={Rentals} />
             <Route path="/Customers" component={Customers} />
