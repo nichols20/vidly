@@ -26,7 +26,6 @@ class LoginForm extends Form {
     //call the server
     try {
       const { data } = await loginUser(this.state.data);
-      console.log(data);
       localStorage.setItem("token", data);
       this.props.history.push("/movies");
     } catch (ex) {
