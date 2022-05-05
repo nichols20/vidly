@@ -27,7 +27,7 @@ class LoginForm extends Form {
     try {
       const { data } = await loginUser(this.state.data);
       localStorage.setItem("token", data);
-      this.props.history.push("/movies");
+      window.location = "/";
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
         const errors = { ...this.state.errors };
