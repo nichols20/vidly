@@ -1,6 +1,6 @@
+import jwtDecode from "jwt-decode";
+import { Component } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
-import "./services/fakeMovieService";
-import "./App.css";
 import NavBar from "./services/navbar";
 import Movies from "./services/movies";
 import Rentals from "./services/rentals";
@@ -10,28 +10,42 @@ import NotFound from "./services/common/notfound";
 import LoginForm from "./services/common/loginform";
 import RegisterForm from "./services/common/registerform";
 import NewMovie from "./services/common/newmovie";
+import "./services/fakeMovieService";
+import "./App.css";
 
-function App() {
-  return (
-    <div>
-      <NavBar />
+class App extends Component {
+  state = {};
 
+  componentDidMount() {
+    try {
+      const jwt = localStorage.getItem("token");
+      const user = jwtDecode(jwt);
+      this.setState({ user });
+    } catch (ex) {}
+  }
+
+  render() {
+    return (
       <div>
-        <Switch>
-          <Route path="/Register" component={RegisterForm} />
-          <Route path="/login" component={LoginForm} />
-          <Route path="/Rentals" component={Rentals} />
-          <Route path="/Customers" component={Customers} />
-          <Route path="/not-found" component={NotFound} />
-          <Route path="/Movies/new" component={NewMovie} />
-          <Route path="/Movies/:id" component={MovieForm} />
-          <Route path="/Movies" component={Movies} />
-          <Redirect exact from="/" to="/movies" />
-          <Redirect to="/not-found" />
-        </Switch>
+        <NavBar user={this.state.user} />
+
+        <div>
+          <Switch>
+            <Route path="/Register" component={RegisterForm} />
+            <Route path="/login" component={LoginForm} />
+            <Route path="/Rentals" component={Rentals} />
+            <Route path="/Customers" component={Customers} />
+            <Route path="/not-found" component={NotFound} />
+            <Route path="/Movies/new" component={NewMovie} />
+            <Route path="/Movies/:id" component={MovieForm} />
+            <Route path="/Movies" component={Movies} />
+            <Redirect exact from="/" to="/movies" />
+            <Redirect to="/not-found" />
+          </Switch>
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 }
 
 /*created Route element with the path /movies which will display the movies component when the url equals the designated
