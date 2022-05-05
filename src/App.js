@@ -1,4 +1,3 @@
-import jwtDecode from "jwt-decode";
 import { Component } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 import NavBar from "./services/navbar";
@@ -13,16 +12,14 @@ import NewMovie from "./services/common/newmovie";
 import "./services/fakeMovieService";
 import "./App.css";
 import Logout from "./services/common/logout";
+import auth from "./services/authService";
 
 class App extends Component {
   state = {};
 
   componentDidMount() {
-    try {
-      const jwt = localStorage.getItem("token");
-      const user = jwtDecode(jwt);
-      this.setState({ user });
-    } catch (ex) {}
+    const user = auth.getCurrentUser();
+    this.setState({ user });
   }
 
   render() {

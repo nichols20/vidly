@@ -1,4 +1,5 @@
 import config from "./config.json";
+import jwtDecode from "jwt-decode";
 const axios = require("axios");
 
 export async function loginUser(user) {
@@ -6,5 +7,29 @@ export async function loginUser(user) {
     email: user.username,
     password: user.password,
   };
-  return await axios.post(`${config["vidly-api"]}/auth`, userLogin);
+
+  const { data: jwt } = await axios.post(
+    `${config["vidly-api"]}/auth`,
+    userLogin
+  );
+  localStorage.setItem("token", jwt);
 }
+
+export async function logoutUser() {
+  localStorage.removeItem("token");
+}
+
+export function getCurrentUser() {
+  try {
+    const jwt = localStorage.getItem("token");
+    return jwtDecode(jwt);
+  } catch (ex) {
+    return null;
+  }
+}
+
+export default {
+  loginUser,
+  logoutUser,
+  getCurrentUser,
+};

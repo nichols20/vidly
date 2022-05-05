@@ -1,7 +1,8 @@
 import React, { Component } from "react";
+import auth from "../authService";
 
 const Logout = () => {
-  localStorage.removeItem("token");
+  auth.logoutUser();
   window.location = "/";
 };
 

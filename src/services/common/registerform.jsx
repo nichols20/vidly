@@ -18,8 +18,7 @@ class RegisterForm extends Form {
   doSubmit = async () => {
     try {
       await registerUser(this.state.data);
-      const { data } = await loginUser(this.state.data);
-      localStorage.setItem("token", data);
+      await loginUser(this.state.data);
       window.location = "/";
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
