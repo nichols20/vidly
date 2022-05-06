@@ -1,6 +1,9 @@
 import config from "./config.json";
 import jwtDecode from "jwt-decode";
+import http from "./httpService";
 const axios = require("axios");
+
+http.setJwt(getToken());
 
 export async function loginUser(user) {
   const userLogin = {
@@ -28,8 +31,13 @@ export function getCurrentUser() {
   }
 }
 
+export function getToken() {
+  return localStorage.getItem("token");
+}
+
 export default {
   loginUser,
   logoutUser,
   getCurrentUser,
+  getToken,
 };
