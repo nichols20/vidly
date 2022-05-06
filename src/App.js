@@ -37,7 +37,10 @@ class App extends Component {
             <Route path="/not-found" component={NotFound} />
             <Route path="/Movies/new" component={NewMovie} />
             <Route path="/Movies/:id" component={MovieForm} />
-            <Route path="/Movies" component={Movies} />
+            <Route
+              path="/Movies"
+              render={(props) => <Movies {...props} user={this.state.user} />}
+            />
             <Redirect exact from="/" to="/movies" />
             <Redirect to="/not-found" />
           </Switch>
@@ -46,6 +49,9 @@ class App extends Component {
     );
   }
 }
+
+/* To pass additional properties inside of a route you need to replace component={} with render this is because component does not
+take props but rather it only takes a single class component to render. ( inside the render object must be a function )*/
 
 /*created Route element with the path /movies which will display the movies component when the url equals the designated
 path. I realized the NavBar will be seperate from the content created so I created a navbar component to keep the code

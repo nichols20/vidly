@@ -24,10 +24,6 @@ class Movies extends Component {
   async componentDidMount() {
     const requestGenre = await getGenres();
     const requestMovie = await getMovies();
-    const movie = await getMovie("618093a472a0c9022d61ac86");
-    console.log(movie.data);
-
-    console.log(requestMovie);
 
     const genres = [{ name: "All Genres" }, ...requestGenre.data];
 
@@ -128,6 +124,10 @@ class Movies extends Component {
     const { pageSize, currentPage, genres, sortColumn, searchQuery } =
       this.state;
 
+    const { user } = this.props;
+
+    console.log(user);
+
     if (count === 0) return <h3>There are no movies in the Database.</h3>;
 
     const { totalCount, data: movies } = this.getPagedData();
@@ -142,9 +142,11 @@ class Movies extends Component {
         </div>
 
         <div className="col">
-          <Link className="btn btn-primary mb-3" to="/Movies/new">
-            New Movie
-          </Link>
+          {user && (
+            <Link className="btn btn-primary mb-3" to="/Movies/new">
+              New Movie
+            </Link>
+          )}
 
           <SearchBar onChange={this.handleSearch} value={searchQuery} />
 
@@ -156,6 +158,7 @@ class Movies extends Component {
             onLike={this.handleLike}
             onSort={this.handleSort}
             sortColumn={sortColumn}
+            user={user}
           />
 
           <Pagination
