@@ -20,9 +20,12 @@ class App extends Component {
   componentDidMount() {
     const user = auth.getCurrentUser();
     this.setState({ user });
+    console.log(this.state.user);
+    console.log(this.state);
   }
 
   render() {
+    console.log(this.state);
     return (
       <div>
         <NavBar user={this.state.user} />
@@ -35,8 +38,20 @@ class App extends Component {
             <Route path="/Rentals" component={Rentals} />
             <Route path="/Customers" component={Customers} />
             <Route path="/not-found" component={NotFound} />
-            <Route path="/Movies/new" component={NewMovie} />
-            <Route path="/Movies/:id" component={MovieForm} />
+            <Route
+              path="/Movies/new"
+              render={(props) => {
+                if (!this.state.user) return <Redirect to="/login" />;
+                return <NewMovie {...props} user={this.state.user} />;
+              }}
+            />
+            <Route
+              path="/Movies/:id"
+              render={(props) => {
+                if (!this.state.user) return <Redirect to="/login" />;
+                return <MovieForm {...props} user={this.state.user} />;
+              }}
+            />
             <Route
               path="/Movies"
               render={(props) => <Movies {...props} user={this.state.user} />}
