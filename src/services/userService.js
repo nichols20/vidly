@@ -1,4 +1,3 @@
-import config from "./config.json";
 const axios = require("axios");
 
 export async function registerUser(user) {
@@ -7,5 +6,5 @@ export async function registerUser(user) {
     password: user.password,
     name: user.name,
   };
-  return await axios.post(`${config["vidly-api"]}/users`, registerUser);
+  return await axios.post(`/users`, registerUser);
 }

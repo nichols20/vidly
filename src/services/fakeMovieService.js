@@ -1,6 +1,3 @@
-import * as genresAPI from "./fakeGenreService";
-import config from "./config.json";
-
 const movies = [
   {
     _id: "5b21ca3eeb7f6fbccd471815",
@@ -80,15 +77,11 @@ const movies = [
 const axios = require("axios");
 
 export async function getMovies() {
-  return await axios
-    .get(`${config["vidly-api"]}/movies`)
-    .catch((error) => console.log(error));
+  return await axios.get(`/movies`).catch((error) => console.log(error));
 }
 
 export async function getMovie(id) {
-  return await axios
-    .get(`${config["vidly-api"]}/movies/${id}`)
-    .catch((error) => console.log(error));
+  return await axios.get(`/movies/${id}`).catch((error) => console.log(error));
 }
 
 export function saveMovie(movie) {
